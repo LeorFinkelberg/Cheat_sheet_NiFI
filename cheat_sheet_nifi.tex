@@ -1,0 +1,65 @@
+\documentclass[%
+	11pt,
+	a4paper,
+	utf8,
+	%twocolumn
+		]{article}	
+
+\usepackage{style_packages/podvoyskiy_article_extended}
+
+
+\begin{document}
+\title{Сборник заметок по Apache NiFi}
+
+\author{}
+
+\date{}
+\maketitle
+
+\thispagestyle{fancy}
+
+\tableofcontents
+
+\section{Установка}
+
+Для того чтобы установить NiFi следует скачать архив бинарников со страницы проекта \url{https://nifi.apache.org/download/} (например, \verb*|nifi-1.25.0-bin.zip|). Затем нужно распоковать архив в целевую директорию, например, в \directory{C: > Users > user > nifi}. 
+
+После чего нужно запустить файл \verb*|run-nifi.bat|, расположенный в поддиректории \verb*|bin|.
+
+В конфигурационном файле \directory{conf > nifi.properties} будет указан хост и порт
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+..
+nifi.web.https.host=127.0.0.1
+nifi.web.https.port=8443
+...
+\end{lstlisting}
+
+А логин и пароль будут сгенерированы в файле \directory{logs > nifi-app.log}
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+...
+Generated Username [e4ef4cdf-5615-4748-8280-d57de0558375]
+Generated Password [X9WaNiKWzLhhpn5s4i/qzLQLwzRwUcKs]
+...
+\end{lstlisting}
+
+
+
+
+
+
+% Источники в "Газовой промышленности" нумеруются по мере упоминания 
+\begin{thebibliography}{99}\addcontentsline{toc}{section}{Список литературы}	
+	\bibitem{sobel:2011}{ \emph{Собель М}. Linux. Администрирование и системное программирование. 2-е изд. -- СПб.: Питер, 2011. -- 880 с. }
+\end{thebibliography}
+
+%\listoffigures\addcontentsline{toc}{section}{Список иллюстраций}
+
+\lstlistoflistings\addcontentsline{toc}{section}{Список листингов}
+
+\end{document}
