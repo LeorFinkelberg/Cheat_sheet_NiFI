@@ -20,7 +20,7 @@
 
 \tableofcontents
 
-\section{Установка}
+\section{Установка на Windows}
 
 Для того чтобы установить NiFi следует скачать архив бинарников со страницы проекта \url{https://nifi.apache.org/download/} (например, \verb*|nifi-1.25.0-bin.zip|). Затем нужно распоковать архив в целевую директорию, например, в \directory{C: > Users > user > nifi}. 
 
@@ -48,6 +48,64 @@ Generated Password [X9WaNiKWzLhhpn5s4i/qzLQLwzRwUcKs]
 ...
 \end{lstlisting}
 
+\section{Основные термины и определения}
+
+\url{https://nifi.apache.org/documentation/v1/}
+
+FlowFile -- основной объект Apache NiFI, содержащий атрибуты данных (метаданные) и контент.
+
+FlowFile Attribute -- атрбуты FlowFile; храняться в оперативной памяти
+
+FlowFile Content -- контент FlowFile; хранится на диске
+
+Processor -- одно действие / опреация с данными FlowFile в Apache NiFi (<<прямоугольничек>> на схеме NiFi)
+
+Process Group -- объединение Processors и других Process Groups
+
+Process -- объединение Processors и Process Groups с целью реализации целевого алгоритма
+
+\section{Архитектура Apache NiFi}
+
+Apache NiFi состоит из:
+\begin{itemize}
+	\item веб-сервера,
+	
+	\item контроллера потоков и процессоров (встроенных или пользовательских),
+	
+	\item трех репоизториев: FlowFile Repository (хранит текущее состояние всех FlowFile'ов), Content Repository (конетнт всех FlowFile'ов) и Provenance Repository (хранит метрики, статистики и пр.).
+\end{itemize}
+
+Apache NiFi гарантирует строго однократную доставку. Если, например, выключат свет, то NiFi данные не потеряет, так как есть лог-файл. NiFi можно разворачивать в кластере для более быстрой параллельной загрузки и обработки данных.
+
+Можно настроить процессор, чтобы он выполнялся либо на всех узлах, либо только на одном главном. Можно повесить ограничения на очередь. Скажем какая-то отдельно взятая очередь должна содержать не более 100 FlowFile'ов весом не более 10 Мб. Если условие нарушается, то NiFi приостановит процессор и таким образом высвободит ресурсы.
+
+\section{Expression Language}
+
+\begin{lstlisting}[
+style = bash,
+numbers = none
+]
+${abc} = значение атрибута
+${abc:toUpper()}
+$${abc} = "${abc}"  - экранирование
+\end{lstlisting}
+
+Ctrl +Space -- подсказки в UI по EL. Все функции можно посмотреть здесь \url{https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html}
+
+Типы данных:
+\begin{itemize}
+	\item String,
+	
+	\item Number, 
+	
+	\item Decimal,
+	
+	\item Date,
+	
+	\item Boolean
+\end{itemize}
+
+После вычислений значения атрибутов приводятся к String. Есть фунцкии приведения типов \verb*|$fileSize:toNumber()|, \verb*|${time:toDate()}|.
 
 
 
